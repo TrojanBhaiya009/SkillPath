@@ -12,12 +12,13 @@ export async function POST(request: NextRequest) {
     }
 
     const { role, known } = parsed.data;
+    console.log("Path API called with:", { role, known });
     const result = await buildPath(role, known);
+    console.log("Path API result steps:", result.steps.length);
     const validated = PathResponseSchema.parse(result);
     return NextResponse.json(validated);
   } catch (error) {
     console.error("Path API error:", error);
-    // Return empty path response on failure
     return NextResponse.json({
       role: "",
       steps: [],

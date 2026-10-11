@@ -66,7 +66,7 @@ export default function Planner() {
         <div className="lg:col-span-4 space-y-6 animate-slide-up" style={{ animationDelay: "50ms" }}>
           <div className="panel p-6 space-y-6">
             <RolePicker value={role} onChange={setRole} disabled={loading} />
-            <SkillPicker value={known} onChange={setKnown} disabled={loading} />
+            <SkillPicker value={known} onChange={setKnown} disabled={loading} role={role} />
             <button
               onClick={handleFindPath}
               disabled={loading || !role}

@@ -12,10 +12,14 @@ export async function buildPath(role: string, known: string[]): Promise<PathResp
   const start = Date.now();
   const knownLower = lowerCaseArray(known);
 
+  console.log("buildPath called with:", { role, known, knownLower });
+
   const learningPathResult = await runCypher<{ skill: string; depth: number; course: string | null; weeks: number | null }>(
     "learning_path",
     { role, knownLower } as Record<string, unknown>
   );
+
+  console.log("learningPathResult:", learningPathResult.length, "skills");
 
   const skillNames = learningPathResult.map((r) => r.skill);
 
@@ -23,6 +27,8 @@ export async function buildPath(role: string, known: string[]): Promise<PathResp
     "path_edges",
     { skills: skillNames } as Record<string, unknown>
   );
+
+  console.log("edgesResult:", edgesResult.length, "edges");
 
   const steps: PathStep[] = learningPathResult.map((r) => ({
     skill: r.skill,
@@ -85,6 +91,8 @@ export async function buildPath(role: string, known: string[]): Promise<PathResp
         source: "extracted",
       })),
   ];
+
+  console.log("Returning:", { steps: steps.length, nodes: nodes.length, edges: edges.length });
 
   return {
     role,
