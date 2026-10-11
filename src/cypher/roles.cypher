@@ -1,0 +1,1 @@
+MATCH (r:JobPosting) RETURN r.title AS name ORDER BY name
